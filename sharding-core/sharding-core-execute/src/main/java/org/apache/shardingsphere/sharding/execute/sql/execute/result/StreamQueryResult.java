@@ -42,6 +42,7 @@ public final class StreamQueryResult implements QueryResult {
     
     public StreamQueryResult(final ResultSet resultSet) throws SQLException {
         resultSetMetaData = resultSet.getMetaData();
+        // 不会把所有查询结果加载至内存
         this.resultSet = resultSet;
     }
     
@@ -49,7 +50,14 @@ public final class StreamQueryResult implements QueryResult {
     public boolean next() throws SQLException {
         return resultSet.next();
     }
-    
+
+    /**
+     * 通过游标一行一行获取查询结果
+     * @param columnIndex
+     * @param type
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object getValue(final int columnIndex, final Class<?> type) throws SQLException {
         if (boolean.class == type) {

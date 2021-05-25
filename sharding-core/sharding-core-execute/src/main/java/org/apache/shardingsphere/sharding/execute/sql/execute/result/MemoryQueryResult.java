@@ -50,7 +50,13 @@ public final class MemoryQueryResult implements QueryResult {
         resultSetMetaData = resultSet.getMetaData();
         rows = getRows(resultSet);
     }
-    
+
+    /**
+     * 把查询结果全部加载至内存
+     * @param resultSet
+     * @return
+     * @throws SQLException
+     */
     private Iterator<List<Object>> getRows(final ResultSet resultSet) throws SQLException {
         Collection<List<Object>> result = new LinkedList<>();
         while (resultSet.next()) {
@@ -119,7 +125,13 @@ public final class MemoryQueryResult implements QueryResult {
         currentRow = null;
         return false;
     }
-    
+
+    /**
+     * 直接从内存获取
+     * @param columnIndex
+     * @param type
+     * @return
+     */
     @Override
     public Object getValue(final int columnIndex, final Class<?> type) {
         return currentRow.get(columnIndex - 1);
